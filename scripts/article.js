@@ -58,7 +58,7 @@
         articleView.initIndexPage();
       });
     }
-    console.log(Article.numWordsAll());
+    console.log(Article.allAuthors());
   };
 
   // DONE: Chain together a `map` and a `reduce` call to get a rough count of all words in all articles.
@@ -71,14 +71,20 @@
     });
   };
 
-  // TODO: Chain together a `map` and a `reduce` call to produce an array of unique author names.
+  // DONE: Chain together a `map` and a `reduce` call to produce an array of unique author names.
   Article.allAuthors = function() {
-    // Read docs on .map and .reduce! You can reference the previous
-    // `map` in the numWordsAll method to get started here.
-
+    var authorArray = Article.all.map(function(article) {
+      return article.author;
+    });
     // For our `reduce` -- since we are trying to return an array, we'll need to specify an accumulator type...
     // what data type should this accumulator be and where is it placed?
-    return whatShouldIReturn;
+    authorArray = authorArray.reduce(function(array, name) {
+      if (array.indexOf(name) < 0) {
+        array.push(name);
+      }
+      return array;
+    }, []);
+    return authorArray;
   };
 
   Article.numWordsByAuthor = function() {
