@@ -58,7 +58,7 @@
         articleView.initIndexPage();
       });
     }
-    console.log(Article.allAuthors());
+    console.log(Article.numWordsByAuthor());
   };
 
   // DONE: Chain together a `map` and a `reduce` call to get a rough count of all words in all articles.
@@ -93,8 +93,20 @@
     // written by the specified author.
     return Article.allAuthors().map(function(author) {
       return {
-        // name:
-        // numWords: someCollection.someArrayMethod().map(...).reduce(...), ...
+        name: author,
+        numWords: Article.all.filter(function(article){
+          if (article.author == author) {
+            return true;
+          }
+        })
+        .map(function(article){
+          return article.body.split(' ').length;
+        })
+        .reduce(function(a,b)  {
+          return a + b;
+        })
+
+        // .map(...).reduce(...), ...
       };
     });
   };
